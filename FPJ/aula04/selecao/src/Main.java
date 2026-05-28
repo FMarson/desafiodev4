@@ -3,7 +3,7 @@ void main() {
 
     //Converter de String para Integer
     //Usar: Integer.parseInt()
-    //idade = Integer.parseInt(IO.readln("Informe a sua idade: "));
+    idade = Integer.parseInt(IO.readln("Informe a sua idade: "));
 
     //Comando if - se algo for verdade
 //    if(idade >= 18){
@@ -35,5 +35,10 @@ void main() {
         IO.println("Está desligado!");
     }
 
+    metodo();
+
+}
+
+void metodo(){
 
 }
