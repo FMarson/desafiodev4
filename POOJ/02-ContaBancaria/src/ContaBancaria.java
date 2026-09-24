@@ -1,31 +1,38 @@
 public class ContaBancaria {
     private Integer agencia;
     private Integer numero;
-    private String nome;
+    private Cliente cliente;
+    private Data dataAbertura;
     private String senha;
     private TipoConta tipo;
     private Double saldo;
-    private Double limite;
+    private Double limiteContratado;
+    private Double limiteUtilizado;
     private Boolean ativa;
 
-    ContaBancaria(Integer agencia, Integer numero, String nome, String senha, TipoConta tipo){
+    ContaBancaria(Integer agencia, Integer numero, Cliente cliente, String senha, TipoConta tipo){
         this.agencia = agencia;
         this.numero = numero;
-        this.nome = nome;
+        this.cliente = cliente;
         this.senha = senha;
         this.tipo = tipo;
         this.saldo = 0.0;
-        this.limite = 0.0;
+        this.limiteContratado = 0.0;
+        this.limiteUtilizado = 0.0;
         this.ativa = true;
     }
 
-    ContaBancaria(Integer agencia, Integer numero, String nome, String senha, TipoConta tipo, Double limite){
+    ContaBancaria(Integer agencia, Integer numero, Cliente cliente, String senha, TipoConta tipo, Double limiteContratado){
         this.agencia = agencia;
         this.numero = numero;
-        this.nome = nome;
+        this.cliente = cliente;
         this.senha = senha;
         this.tipo = tipo;
-        this.limite = limite;
+        if(this.tipo == TipoConta.CONTA_CORRENTE)
+            this.limiteContratado = limiteContratado;
+        else if(this.tipo == TipoConta.POUPANCA)
+            this.limiteContratado = 0.0;
+        this.limiteUtilizado = 0.0;
         this.saldo = 0.0;
         this.ativa = true;
     }
@@ -38,12 +45,21 @@ public class ContaBancaria {
     }
 
     public void depositar(Double valor){
-        if(valor >= 0.0) {
-            this.saldo += valor; // ou this.saldo = this.saldo + valor;
+        if(valor > 0.0) {
+            IO.println("Depósito de R$ " + valor + " efetuado!" );
+            if(this.limiteUtilizado > 0.0){ // pagar o o que foi no limite
+                this.limiteUtilizado -= valor;
+                if(this.limiteUtilizado < 0.0) { // eu ainda tenho algo para pagar
+                    saldo = -this.limiteUtilizado; // inverter a dívida e deposito o que sobrou
+                    this.limiteUtilizado = 0.0;
+                }
+            }
+            else
+                this.saldo += valor; // ou this.saldo = this.saldo + valor;
         }
-        // testar limite
     }
 
+    // limite
     public Double sacar(Double valor, String senha){
         if(estaBloqueada() == true){
             IO.println("A conta está bloqueada!");
@@ -51,13 +67,28 @@ public class ContaBancaria {
         }
 
         if(autenticar(senha) == true){
-            //testar limite
-            if(saldo >= valor){
-                saldo -= valor;
-                return valor;
+            if(limiteContratado > 0.0) {
+                if (saldo + (limiteContratado - limiteUtilizado) >= valor) {
+                    saldo -= valor;
+                    if(saldo < 0.0){
+                        limiteUtilizado -= saldo;
+                        saldo = 0.0;
+                    }
+                    IO.println("Foi efetuado um saque de R$ " + valor);
+                    return valor;
+                } else {
+                    IO.println("Saldo + limite contratado não é suficiente para efetuar o saque.");
+                }
             }
             else{
-                IO.println("Saldo insuficiente!");
+                if(saldo >= valor){
+                    saldo -= valor;
+                    IO.println("Foi efetuado um saque de R$ " + valor);
+                    return valor;
+                }
+                else{
+                    IO.println("Saldo insuficiente!");
+                }
             }
         }
         else{
@@ -66,6 +97,7 @@ public class ContaBancaria {
         return 0.0;
     }
 
+    // limite
     public void consultarSaldo(String senha){
         if(estaBloqueada() == true){
             IO.println("A conta está bloqueada!");
@@ -73,6 +105,10 @@ public class ContaBancaria {
         else {
             if (autenticar(senha) == true) {
                 IO.println("Saldo: " + this.saldo);
+                if(this.limiteContratado > 0.0) {
+                    IO.println("Limite contratado: " + this.limiteContratado);
+                    IO.println("Limite utilizado: " + this.limiteUtilizado);
+                }
             } else
                 IO.println("Senha incorreta!");
         }
@@ -94,6 +130,8 @@ public class ContaBancaria {
                 IO.println("Senha incorreta!");
         }
     }
+
+    // contratar limite se for conta corrente
 
     public void bloquear(String senha){
         if(estaBloqueada() == true){
