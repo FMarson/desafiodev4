@@ -1,0 +1,3 @@
+public enum TipoConta{
+    POUPANCA, CONTA_CORRENTE //, CONTA_CORRENTE_CONJUNTA, CONTA_CORRENTE_EMPRESARIAL Quaisquer outros tipos
+}

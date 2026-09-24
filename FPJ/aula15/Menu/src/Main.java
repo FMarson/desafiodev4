@@ -23,7 +23,7 @@ Double calcularDiametro(Double raio) {
 
 void menuCirculo(){
     Integer opcao;
-    Double raio = 1.0, area, perimetro, diametro;
+    Double raio = 1.0, area, perimetro, diametro, valor, resultado;
 
     do {
         IO.println("\nMENU CÍRCULO");
@@ -53,6 +53,7 @@ void menuCirculo(){
             }
 
             case 5 -> { //sair do menu
+
             }
 
             default -> {
@@ -132,6 +133,25 @@ void menuPrincipal(){
     while(opcao != 3);
 }
 
+Double converterMparaKM(Double m){
+    return m / 1000.0;
+}
+
+Double converterKMparaM(Double km){
+    return km * 1000.0;
+}
+
+
 void main() {
-    menuPrincipal();
+    Double valor, resultado;
+
+    valor = Double.parseDouble(IO.readln("Informe o valor em metros: "));
+    resultado = converterMparaKM(valor);
+    IO.println(valor + "m equivale a " + resultado + "km.");
+
+    valor = Double.parseDouble(IO.readln("Informe o valor em quilometros: "));
+    resultado = converterKMparaM(valor);
+    IO.println(valor + "km equivale a " + resultado + "m.");
+
+    //menuPrincipal();
 }
