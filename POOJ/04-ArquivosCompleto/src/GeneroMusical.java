@@ -1,5 +1,4 @@
 public enum GeneroMusical {
-
     ROCK("Rock"),
     POP("Pop"),
     SAMBA("Samba"),
@@ -8,8 +7,9 @@ public enum GeneroMusical {
     HIP_HOP("Hip-hop"),
     REGGAE("Reggae"),
     SERTANEJO("Sertanejo"),
-    MUSICA_ELETRONICA("Música eletrônica"),
-    FORRO("Forró");
+    MUSICA_ELETRONICA("Música Eletrônica"),
+    FORRO("Forró"),
+    MPB("Música Popular Brasileira");
 
     private final String nome;
 
