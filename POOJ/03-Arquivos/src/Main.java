@@ -10,10 +10,9 @@ void main() {
     Double altura = 1.67;
     Arquivo arquivo = new Arquivo(nomeArquivo);
 
-    Arquivo.adicionarln(nome);
-    Arquivo.adicionarln(idade.toString());
-    Arquivo.adicionarln(altura.toString());
-    */
+    arquivo.adicionarln(nome);
+    arquivo.adicionarln(idade.toString());
+    arquivo.adicionarln(altura.toString());
 
     Integer idade, somaIdades = 0;
     Double altura, somaAlturas = 0.0, mediaAlturas;
