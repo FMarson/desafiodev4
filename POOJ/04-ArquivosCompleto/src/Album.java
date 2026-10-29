@@ -23,6 +23,11 @@ public class Album {
         this.faixas = new ArrayList<>();
     }
 
+    public Album() {
+        this.artistas = new ArrayList<>();
+        this.faixas = new ArrayList<>();
+    }
+
     public String getTitulo() {
         return titulo;
     }

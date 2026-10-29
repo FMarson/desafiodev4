@@ -1,9 +1,12 @@
 void main(){
-    Arquivo arquivoMusical;
+    /*
+    Arquivo arquivoMusical, arquivoDadosAlbum;
     Album album;
     Faixa faixa;
     Duration duracao;
     List<String> artistas, compositores;
+
+    List<String> linhasArquivo;
 
     artistas = new ArrayList<>();
     artistas.add("Anitta");
@@ -21,23 +24,48 @@ void main(){
     duracao = Duration.ofMinutes(3).plusSeconds(7);
     artistas.add("Marina Sena");
     faixa = new Faixa("Mandinga", 2, duracao, GeneroMusical.POP, artistas, compositores);
-
     album.adicionarFaixa(faixa);
 
-    arquivoMusical = new Arquivo("Equilibrium.txt");
-    arquivoMusical.limpar();
+    linhasArquivo = new ArrayList<>();
+
+    arquivoMusical = new Arquivo("equilibrium.txt");
+    arquivoDadosAlbum = new Arquivo("equilibrium.dat");
+
+    //    album = Album.fromString(linhasArquivo);
+
     arquivoMusical.adicionarln(album.toStringDetalhado());
+    arquivoDadosAlbum.adicionarln(album.toString());
+     */
 
-    //-----------------------------------------------------------------
-    artistas = new ArrayList<>();
-    compositores = new ArrayList<>();
-    /*
-    album = new Album(NOME DO ALBUM, artistas, ANO);
-    */
+    menuPrincipal();
+}
+void menuCriarAlbum(){
+    IO.println("Você selecionou a criação de álbuns!");
+}
 
-    arquivoMusical = new Arquivo("Outro Álbum.txt");
-    arquivoMusical.limpar();
-    arquivoMusical.adicionarln(album.toStringDetalhado());
+void menuPrincipal(){
+    String opcao;
 
+    do {
+        IO.println("Menu principal");
+        IO.println("1) Criar álbum");
+        IO.println("2) Carregar álbum de arquivo");
+        IO.println("3) Salvar álbum em arquivo");
+        IO.println("4) Sair do programa");
+        opcao = IO.readln("Informe a opção desejada: ");
+
+        switch (opcao.charAt(0)) {
+            case '1' -> {
+                menuCriarAlbum();
+            }
+            case '2' -> IO.println("Você selecionou o carregamento de álbuns!");
+            case '3' -> IO.println("Você selecionou o salvamento de álbuns!");
+            case '4' -> IO.println("Você terminou o programa!");
+
+            default -> IO.println("Opção inválida, selecione novamente a opção desejada!");
+        }
+        IO.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+
+    } while(opcao.charAt(0) != '4');
 
 }
